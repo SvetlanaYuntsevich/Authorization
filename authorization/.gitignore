@@ -27,3 +27,8 @@ hs_err_pid*
 out/*
 target/*
 *.sql
+/authorization/
+/target/
+/pom.xml
+/Workspace/
+/src/

@@ -9,8 +9,8 @@ public class SignOut implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request) {
-		 request.getSession().invalidate();
-	        return PageContainer.INDEX_PAGE;
+		request.getSession().invalidate();
+		return PageContainer.INDEX_PAGE;
 	}
 
 }

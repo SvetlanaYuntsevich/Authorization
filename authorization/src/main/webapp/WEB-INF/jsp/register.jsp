@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java"%>
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -13,7 +15,7 @@
                    <table id="registration-table">
                        <tr>
                            <td>
-                                <form:label path="name" >Name:</form:label>
+                                <form:label path="name">Name:</form:label>
                            </td>
                            <td>
                                 <input type="text" name="name"  maxlength="15" required="required" title="${name}"/>

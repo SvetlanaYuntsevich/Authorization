@@ -4,18 +4,19 @@ import by.epam.jwd.service.UserService;
 import by.epam.jwd.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
-	 private static final ServiceFactory INSTANCE = new ServiceFactory();
+	private static final ServiceFactory INSTANCE = new ServiceFactory();
 
-	    private static final UserService USER_SERVICE_INSTANCE = new UserServiceImpl();
+	private static final UserService USER_SERVICE_INSTANCE = new UserServiceImpl();
 
-	    private ServiceFactory() {}
+	private ServiceFactory() {
+	}
 
-	    public static ServiceFactory getInstance() {
-	        return INSTANCE;
-	    }
+	public static ServiceFactory getInstance() {
+		return INSTANCE;
+	}
 
-	    public UserService getUserService() {
-	        return USER_SERVICE_INSTANCE;
-	    }
+	public UserService getUserService() {
+		return USER_SERVICE_INSTANCE;
+	}
 
 }

@@ -8,26 +8,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 final class CommandProvider {
-    private final Map<CommandName, Command> repository = new HashMap<>();
+	private final Map<CommandName, Command> repository = new HashMap<>();
 
-    CommandProvider(){
-        repository.put(CommandName.SIGN_IN, new SignIn());
-        repository.put(CommandName.REGISTER, new Register());
-        repository.put(CommandName.TO_REGISTER, new ToRegisterPage());
-        repository.put(CommandName.TO_LOGIN, new ToLoginPage());
-        repository.put(CommandName.WELCOME, new Welcome());
-        repository.put(CommandName.SIGN_OUT, new SignOut());
+	CommandProvider() {
+		repository.put(CommandName.SIGN_IN, new SignIn());
+		repository.put(CommandName.REGISTER, new Register());
+		repository.put(CommandName.TO_REGISTER, new ToRegisterPage());
+		repository.put(CommandName.TO_LOGIN, new ToLoginPage());
+		repository.put(CommandName.WELCOME, new Welcome());
+		repository.put(CommandName.SIGN_OUT, new SignOut());
 
-  
-    }
+	}
 
-    Command getCommand(String name){
-        CommandName commandName;
-        Command command;
-            commandName = CommandName.valueOf(name.toUpperCase());
-            command = repository.get(commandName);
-      
-
-        return command;
-    }
+	Command getCommand(String name) {
+		CommandName commandName;
+		Command command;
+		commandName = CommandName.valueOf(name.toUpperCase());
+		command = repository.get(commandName);
+		return command;
+	}
 }
