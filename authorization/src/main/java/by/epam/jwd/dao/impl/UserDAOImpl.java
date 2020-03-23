@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.epam.jwd.dao.UserDAO;
-import by.epam.jwd.dao.connectionPool.*;
+import by.epam.jwd.dao.dbConnection.*;
 import by.epam.jwd.dao.exception.DAOException;
 import by.epam.jwd.entity.Role;
 import by.epam.jwd.entity.User;
