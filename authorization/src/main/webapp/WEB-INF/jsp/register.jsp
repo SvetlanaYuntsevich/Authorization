@@ -56,7 +56,6 @@
                            </td>
                        </tr>
                        <tr>
-                       <tr>
                            <td>
                            <form action="Controller" method="GET" align="center" id="register">
                             <input type="hidden" name="command" value="result_register" />

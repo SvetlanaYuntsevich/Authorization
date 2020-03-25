@@ -2,6 +2,9 @@ package by.epam.jwd.service.validator;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.epam.jwd.entity.User;
 import by.epam.jwd.service.UserService;
 import by.epam.jwd.service.exception.ServiceException;
@@ -15,6 +18,8 @@ public class Validator {
 	private static final String DATE_PATTERN = "[2][\\d]{3}\\-[0-1][0-9]\\-[0-3][0-9]";
 
 	private static final Validator instance = new Validator();
+	private static final Logger LOGGER = LogManager.getLogger();
+
 
 	public Validator() {
 	}
@@ -40,6 +45,8 @@ public class Validator {
 	}
 
 	public boolean validateUniqueLogin(String login) throws ServiceException {
+        LOGGER.debug("start validateUniqeLogin login: " + login);
+
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
 		UserService userService = serviceFactory.getUserService();
 		List<User> users = userService.findAll();
@@ -51,6 +58,8 @@ public class Validator {
 				count++;
 			}
 		}
+        LOGGER.debug("finish validateUniqeLogin, find users: " + count);
+
 		return count == 0;
 	}
 }

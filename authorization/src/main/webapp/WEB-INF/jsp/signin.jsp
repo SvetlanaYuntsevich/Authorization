@@ -22,13 +22,17 @@
 					<td><input type="text" name="password" placeholder="qwerty"
 						maxlength="10" required="required" title="${password}" /></td>
 				</tr>
+				<tr>
+					<td>
+						<form action="Controller" method="GET">
+							<input type="hidden" name="command" value="welcome" />
+							<button class="btn btn-success" type="submit">Submit</button>
+						</form>
+					</td>
+
+				</tr>
 			</table>
 		</form>
-		<form action="Controller" method="GET" >
-			<input type="hidden" name="command" value="welcome" />
-			<button class="btn btn-success" type="submit">Submit</button>
-		</form>
-
 	</div>
 </body>
 </html>

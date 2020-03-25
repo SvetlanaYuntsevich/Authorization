@@ -17,10 +17,10 @@
 				<tr>
 					<td align="center"
 						style="color: DarkBlue; font-weight: bold; font-size: 16px; font-style: italic">
-						<p>${param.name}!</p>
+						<p>${param.name}! Thank You for registration!</p>
 						<form action="Controller" method="GET" 
 							style="margin: 15px">
-							<input type="hidden" name="command" value="to_login" /> <input
+							<input type="hidden" name="command" value="welcome" /> <input
 								type="submit" class="btn btn-success" value="Continue" />
 						</form>
 					</td>

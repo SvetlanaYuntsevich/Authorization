@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.epam.jwd.dao.UserDAO;
 import by.epam.jwd.dao.dbConnection.*;
 import by.epam.jwd.dao.exception.DAOException;
@@ -23,21 +27,16 @@ public class UserDAOImpl implements UserDAO {
 	private static final String SQL_SELECT_USER_BY_ID = "SELECT `id-user`, surname, name, login, email, discount, `role-id-role` FROM users WHERE `id-user` = ?;";
 	private static final String SQL_UPDATE_USER_ROLE_BY_ID = "UPDATE users SET `role-id-role`=? WHERE `id-user`=?;";
 
-	private ConnectionPool connectionPool;
+	private ConnectionPool connectionPool = ConnectionPool.getInstance();
+	private static final Logger LOGGER = LogManager.getLogger();
 
 	public UserDAOImpl() {
-		connectionPool = ConnectionPool.getInstance();
-
-		try {
-			connectionPool.initPool();
-		} catch (ConnectionPoolException e) {
-			// TODO: logger
-			System.out.println("pool not initialized");
-		}
 	}
 
 	@Override
 	public User signIn(String login, String password) throws DAOException {
+		LOGGER.debug("start user signIn");
+
 		User user = null;
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -54,30 +53,32 @@ public class UserDAOImpl implements UserDAO {
 				user.setSurname(rs.getString(2));
 				user.setName(rs.getString(3));
 				user.setLogin(rs.getString(4));
-				user.setEmail(rs.getString(6));
-				user.setDiscount(rs.getInt(7));
-				user.setRole(Role.getValue(rs.getInt(8)));
+				user.setEmail(rs.getString(5));
+				user.setDiscount(rs.getInt(6));
+				user.setRole(Role.getValue(rs.getInt(7)));
 			}
-
 		} catch (SQLException | ConnectionPoolException e) {
+			LOGGER.error("user signIn exception ", e);
 			throw new DAOException(e);
 		} finally {
-			try {
-				connectionPool.dispose();
-			} catch (ConnectionPoolException e) {
-				throw new DAOException(e);
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					LOGGER.log(Level.ERROR, "SQLException in connection return", e);
+				}
 			}
 		}
+		LOGGER.debug("finish user signIn");
 		return user;
 	}
 
 	@Override
 	public void register(User user) throws DAOException {
+		LOGGER.debug("start user registration");
 		Connection connection = null;
 		PreparedStatement ps = null;
 		try {
-			connectionPool.initPool(); // разобраться, почему не работает без инициализации внутри метода (только
-										// здесь)
 			connection = connectionPool.takeConnection();
 			connection.setAutoCommit(false);
 			ps = connection.prepareStatement(SQL_INSERT_USER);
@@ -89,18 +90,23 @@ public class UserDAOImpl implements UserDAO {
 			ps.executeUpdate();
 			connection.commit();
 		} catch (SQLException | ConnectionPoolException e) {
-			throw new DAOException(e);
+			LOGGER.error("user registration exception ", e);
+			throw new DAOException("user registration exception ", e);
 		} finally {
-			try {
-				connectionPool.dispose();
-			} catch (ConnectionPoolException e) {
-				throw new DAOException(e);
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					LOGGER.log(Level.ERROR, "SQLException in connection return", e);
+				}
 			}
 		}
+		LOGGER.debug("finish user registration");
 	}
 
 	@Override
 	public List<User> getAllUsers() throws DAOException {
+        LOGGER.debug("start get all users");
 		Connection connection = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;
@@ -122,19 +128,24 @@ public class UserDAOImpl implements UserDAO {
 				users.add(user);
 			}
 		} catch (ConnectionPoolException | SQLException e) {
+            LOGGER.error("get all users exception ", e);
 			throw new DAOException("find all users exception ", e);
 		} finally {
-			try {
-				connectionPool.dispose();
-			} catch (ConnectionPoolException e) {
-				throw new DAOException(e);
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					LOGGER.log(Level.ERROR, "SQLException in connection return", e);
+				}
 			}
 		}
+        LOGGER.debug("finish get all users");
 		return users;
 	}
 
 	@Override
 	public void setDiscountById(int id, int discount) throws DAOException {
+        LOGGER.debug("start setDiscount user by ID");
 		Connection connection = null;
 		PreparedStatement ps = null;
 		try {
@@ -145,19 +156,24 @@ public class UserDAOImpl implements UserDAO {
 			ps.setInt(2, id);
 			ps.executeUpdate();
 			connection.commit();
-		} catch (ConnectionPoolException | SQLException e) {
+		} catch (ConnectionPoolException | SQLException e) { 
+			LOGGER.error("user setDiscount exception ", e);
 			throw new DAOException("user setDiscount exception ", e);
 		} finally {
-			try {
-				connectionPool.dispose();
-			} catch (ConnectionPoolException e) {
-				throw new DAOException(e);
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					LOGGER.log(Level.ERROR, "SQLException in connection return", e);
+				}
 			}
 		}
+        LOGGER.debug("finish setDiscount user by ID");
 	}
 
 	@Override
 	public void update(User user) throws DAOException {
+        LOGGER.debug("start update user");
 		Connection connection = null;
 		PreparedStatement ps = null;
 		try {
@@ -172,18 +188,23 @@ public class UserDAOImpl implements UserDAO {
 			ps.executeUpdate();
 			connection.commit();
 		} catch (ConnectionPoolException | SQLException e) {
+            LOGGER.error("user update exception ", e);
 			throw new DAOException("user update exception ", e);
 		} finally {
-			try {
-				connectionPool.dispose();
-			} catch (ConnectionPoolException e) {
-				throw new DAOException(e);
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					LOGGER.log(Level.ERROR, "SQLException in connection return", e);
+				}
 			}
 		}
+        LOGGER.debug("finish update user by ID");
 	}
 
 	@Override
 	public User getUserById(int id) throws DAOException {
+        LOGGER.debug("start get user by ID");
 		User user = null;
 		Connection connection = null;
 		ResultSet rs = null;
@@ -204,19 +225,24 @@ public class UserDAOImpl implements UserDAO {
 				user.setRole(Role.getValue(rs.getInt(8)));
 			}
 		} catch (ConnectionPoolException | SQLException e) {
-			throw new DAOException("user find by ID exception ", e);
+            LOGGER.error("get user by ID exception ", e);
+			throw new DAOException("user get by ID exception ", e);
 		} finally {
-			try {
-				connectionPool.dispose();
-			} catch (ConnectionPoolException e) {
-				throw new DAOException(e);
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					LOGGER.log(Level.ERROR, "SQLException in connection return", e);
+				}
 			}
 		}
+        LOGGER.debug("finish get user by ID");
 		return user;
 	}
 
 	@Override
 	public void setRoleById(int id, String role) throws DAOException {
+        LOGGER.debug("start set user role by ID");
 		Connection connection = null;
 		PreparedStatement ps = null;
 		int roleNumber = 1;
@@ -231,13 +257,17 @@ public class UserDAOImpl implements UserDAO {
 			ps.executeUpdate();
 			connection.commit();
 		} catch (ConnectionPoolException | SQLException e) {
-			throw new DAOException("user setDiscount exception ", e);
+	        LOGGER.error("set user role by ID exception");
+			throw new DAOException("user set user role exception ", e);
 		} finally {
-			try {
-				connectionPool.dispose();
-			} catch (ConnectionPoolException e) {
-				throw new DAOException(e);
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					LOGGER.log(Level.ERROR, "SQLException in connection return", e);
+				}
 			}
 		}
+        LOGGER.debug("finish set user role by ID");
 	}
 }
