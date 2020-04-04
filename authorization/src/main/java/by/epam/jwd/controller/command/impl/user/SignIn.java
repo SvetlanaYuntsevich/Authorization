@@ -15,13 +15,24 @@ import by.epam.jwd.service.factory.ServiceFactory;
 
 public class SignIn implements Command {
 	private static final Logger LOGGER = LogManager.getLogger();
+	private static final String PARAM_LOGIN = "login";
+    private static final String PARAM_PASSWORD = "password";
+    private static final String SESSION_ROLE = "role";
+    private static final String SESSION_USER = "user";
+    private static final String SESSION_USER_ID = "id";
+    private static final String SESSION_USER_NAME = "name";
+    private static final String SESSION_USER_SURNAME = "surname";
+   // private static final String SESSION_USER_EMAIL = "email";
+    private static final String SESSION_USER_LOGIN = "login";
+
+
 
     @Override
     public String execute(HttpServletRequest  request) {
         LOGGER.debug("start SignInCommand");
 
-    	String login = request.getParameter("login");
-        String password = request.getParameter("password");
+    	String login = request.getParameter(PARAM_LOGIN);
+        String password = request.getParameter(PARAM_PASSWORD);
         String page = null;	
 
         ServiceFactory factory = ServiceFactory.getInstance();
@@ -32,14 +43,14 @@ public class SignIn implements Command {
             user = userService.signIn(login, password);
 
             if (user != null) {
-                request.setAttribute("user", user);
-                session.setAttribute("user", user);
-                session.setAttribute("id", user.getId());
-                session.setAttribute("name", user.getName());
-                session.setAttribute("surname", user.getSurname());
-                session.setAttribute("email", user.getEmail());
-                session.setAttribute("login", user.getLogin());
-                session.setAttribute("role", user.getRole());
+                request.setAttribute(SESSION_USER, user);
+                session.setAttribute(SESSION_USER, user);
+                session.setAttribute(SESSION_USER_ID, user.getId());
+                session.setAttribute(SESSION_USER_NAME, user.getName());
+                session.setAttribute(SESSION_USER_SURNAME, user.getSurname());
+              //  session.setAttribute(SESSION_USER_EMAIL, user.getEmail());
+                session.setAttribute(SESSION_USER_LOGIN, user.getLogin());
+                session.setAttribute(SESSION_ROLE, user.getRole());
                 page = PageContainer.WELCOME;
                 
             } else {

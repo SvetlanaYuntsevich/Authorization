@@ -8,30 +8,34 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
 
+@WebFilter(urlPatterns = { "/*" }, initParams = {
+		@WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param") })
 public class EncodingFilter implements Filter {
 
-    private static final String ENCODING_INIT_PARAM_NAME = "encoding";
-    private String code;
+	private String defaultEncoding = "utf-8";
+	private static final String ENCODING = "encoding";
 
-    @Override
-    public void init(FilterConfig fConfig) {
-        code = fConfig.getInitParameter(ENCODING_INIT_PARAM_NAME);
-    }
+	@Override
+	public void init(FilterConfig filterConfig) {
+		String encoding = filterConfig.getInitParameter(ENCODING);
+		if (encoding != null) {
+			defaultEncoding = encoding;
+		}
+	}
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String codeRequest = request.getCharacterEncoding();
-        if (code != null && !code.equalsIgnoreCase(codeRequest)) {
-            request.setCharacterEncoding(code);
-            response.setCharacterEncoding(code);
-        }
-        chain.doFilter(request, response);
-    }
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+			throws IOException, ServletException {
+		servletRequest.setCharacterEncoding(defaultEncoding);
+		servletResponse.setCharacterEncoding(defaultEncoding);
+		filterChain.doFilter(servletRequest, servletResponse);
+	}
 
-    @Override
-    public void destroy() {
-        code = null;
-    }
+	@Override
+	public void destroy() {
 
+	}
 }

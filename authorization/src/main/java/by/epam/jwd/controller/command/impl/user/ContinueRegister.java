@@ -15,6 +15,13 @@ import by.epam.jwd.service.factory.ServiceFactory;
 
 public class ContinueRegister implements Command {
 	private static final Logger LOGGER = LogManager.getLogger();
+	private static final String SESSION_ROLE = "role";
+	private static final String SESSION_USER = "user";
+	private static final String SESSION_USER_ID = "id";
+	private static final String SESSION_USER_NAME = "name";
+	private static final String SESSION_USER_SURNAME = "surname";
+	 private static final String SESSION_USER_EMAIL = "email";
+	private static final String SESSION_USER_LOGIN = "login";
 
 	@Override
 	public String execute(HttpServletRequest request) {
@@ -23,7 +30,7 @@ public class ContinueRegister implements Command {
 		String page;
 
 		HttpSession session = request.getSession(true);
-		User newUser = (User) request.getSession().getAttribute("user");
+		User newUser = (User) request.getSession().getAttribute(SESSION_USER);
 		LOGGER.debug("ContinueRegister new User: " + newUser);
 
 		ServiceFactory factory = ServiceFactory.getInstance();
@@ -34,12 +41,12 @@ public class ContinueRegister implements Command {
 		try {
 			user = userService.signIn(newUser.getLogin(), newUser.getPassword());
 			LOGGER.debug("ContinueRegister User: " + user);
-			session.setAttribute("user", user);
-			session.setAttribute("id", user.getId());
-			session.setAttribute("name", user.getName());
-			session.setAttribute("surname", user.getSurname());
-			session.setAttribute("email", user.getEmail());
-			session.setAttribute("role", user.getRole());
+			session.setAttribute(SESSION_USER, user);
+			session.setAttribute(SESSION_USER_ID, user.getId());
+			session.setAttribute(SESSION_USER_NAME, user.getName());
+			session.setAttribute(SESSION_USER_SURNAME, user.getSurname());
+			session.setAttribute(SESSION_USER_EMAIL, user.getEmail());
+			session.setAttribute(SESSION_ROLE, user.getRole());
 			page = PageContainer.WELCOME;
 
 		} catch (ServiceException e) {

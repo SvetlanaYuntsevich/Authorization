@@ -2,6 +2,7 @@ package by.epam.jwd.controller;
 
 import by.epam.jwd.controller.command.Command;
 import by.epam.jwd.controller.command.CommandName;
+import by.epam.jwd.controller.command.impl.ChangeLocale;
 import by.epam.jwd.controller.command.impl.user.*;
 
 import java.util.HashMap;
@@ -17,6 +18,9 @@ final class CommandProvider {
 		repository.put(CommandName.TO_LOGIN, new ToLoginPage());
 		repository.put(CommandName.WELCOME, new Welcome());
 		repository.put(CommandName.SIGN_OUT, new SignOut());
+		repository.put(CommandName.RU, new ChangeLocale());
+		repository.put(CommandName.EN, new ChangeLocale());
+		repository.put(CommandName.CHANGE_LOCALE, new ChangeLocale());
 
 	}
 

@@ -6,5 +6,8 @@ public enum CommandName {
 	SIGN_OUT, 
 	TO_REGISTER, 
 	WELCOME, 
-	TO_LOGIN
+	TO_LOGIN,
+	RU,
+    EN,
+    CHANGE_LOCALE
 }

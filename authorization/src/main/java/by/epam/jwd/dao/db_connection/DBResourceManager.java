@@ -1,4 +1,4 @@
-package by.epam.jwd.dao.dbConnection;
+package by.epam.jwd.dao.db_connection;
 
 import java.util.ResourceBundle;
 

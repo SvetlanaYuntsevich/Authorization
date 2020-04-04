@@ -12,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epam.jwd.dao.UserDAO;
-import by.epam.jwd.dao.dbConnection.*;
+import by.epam.jwd.dao.db_connection.*;
 import by.epam.jwd.dao.exception.DAOException;
 import by.epam.jwd.entity.Role;
 import by.epam.jwd.entity.User;
@@ -106,7 +106,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<User> getAllUsers() throws DAOException {
-        LOGGER.debug("start get all users");
+		LOGGER.debug("start get all users");
 		Connection connection = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;
@@ -128,8 +128,8 @@ public class UserDAOImpl implements UserDAO {
 				users.add(user);
 			}
 		} catch (ConnectionPoolException | SQLException e) {
-            LOGGER.error("get all users exception ", e);
-			throw new DAOException("find all users exception ", e);
+			LOGGER.error("get all users exception ", e);
+			throw new DAOException("get all users exception ", e);
 		} finally {
 			if (connection != null) {
 				try {
@@ -139,13 +139,13 @@ public class UserDAOImpl implements UserDAO {
 				}
 			}
 		}
-        LOGGER.debug("finish get all users");
+		LOGGER.debug("finish get all users");
 		return users;
 	}
 
 	@Override
 	public void setDiscountById(int id, int discount) throws DAOException {
-        LOGGER.debug("start setDiscount user by ID");
+		LOGGER.debug("start setDiscount user by ID");
 		Connection connection = null;
 		PreparedStatement ps = null;
 		try {
@@ -156,7 +156,7 @@ public class UserDAOImpl implements UserDAO {
 			ps.setInt(2, id);
 			ps.executeUpdate();
 			connection.commit();
-		} catch (ConnectionPoolException | SQLException e) { 
+		} catch (ConnectionPoolException | SQLException e) {
 			LOGGER.error("user setDiscount exception ", e);
 			throw new DAOException("user setDiscount exception ", e);
 		} finally {
@@ -168,12 +168,12 @@ public class UserDAOImpl implements UserDAO {
 				}
 			}
 		}
-        LOGGER.debug("finish setDiscount user by ID");
+		LOGGER.debug("finish setDiscount by user ID");
 	}
 
 	@Override
 	public void update(User user) throws DAOException {
-        LOGGER.debug("start update user");
+		LOGGER.debug("start update user");
 		Connection connection = null;
 		PreparedStatement ps = null;
 		try {
@@ -188,7 +188,7 @@ public class UserDAOImpl implements UserDAO {
 			ps.executeUpdate();
 			connection.commit();
 		} catch (ConnectionPoolException | SQLException e) {
-            LOGGER.error("user update exception ", e);
+			LOGGER.error("user update exception ", e);
 			throw new DAOException("user update exception ", e);
 		} finally {
 			if (connection != null) {
@@ -199,12 +199,12 @@ public class UserDAOImpl implements UserDAO {
 				}
 			}
 		}
-        LOGGER.debug("finish update user by ID");
+		LOGGER.debug("finish update user by ID");
 	}
 
 	@Override
 	public User getUserById(int id) throws DAOException {
-        LOGGER.debug("start get user by ID");
+		LOGGER.debug("start get user by ID");
 		User user = null;
 		Connection connection = null;
 		ResultSet rs = null;
@@ -225,7 +225,7 @@ public class UserDAOImpl implements UserDAO {
 				user.setRole(Role.getValue(rs.getInt(8)));
 			}
 		} catch (ConnectionPoolException | SQLException e) {
-            LOGGER.error("get user by ID exception ", e);
+			LOGGER.error("get user by ID exception ", e);
 			throw new DAOException("user get by ID exception ", e);
 		} finally {
 			if (connection != null) {
@@ -236,13 +236,13 @@ public class UserDAOImpl implements UserDAO {
 				}
 			}
 		}
-        LOGGER.debug("finish get user by ID");
+		LOGGER.debug("finish get user by ID");
 		return user;
 	}
 
 	@Override
 	public void setRoleById(int id, String role) throws DAOException {
-        LOGGER.debug("start set user role by ID");
+		LOGGER.debug("start set user role by ID");
 		Connection connection = null;
 		PreparedStatement ps = null;
 		int roleNumber = 1;
@@ -257,8 +257,8 @@ public class UserDAOImpl implements UserDAO {
 			ps.executeUpdate();
 			connection.commit();
 		} catch (ConnectionPoolException | SQLException e) {
-	        LOGGER.error("set user role by ID exception");
-			throw new DAOException("user set user role exception ", e);
+			LOGGER.error("set user role by ID exception");
+			throw new DAOException("set user role exception", e);
 		} finally {
 			if (connection != null) {
 				try {
@@ -268,6 +268,6 @@ public class UserDAOImpl implements UserDAO {
 				}
 			}
 		}
-        LOGGER.debug("finish set user role by ID");
+		LOGGER.debug("finish set user role by ID");
 	}
 }

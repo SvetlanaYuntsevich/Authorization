@@ -7,8 +7,8 @@ import javax.servlet.annotation.WebListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.epam.jwd.dao.dbConnection.ConnectionPool;
-import by.epam.jwd.dao.dbConnection.ConnectionPoolException;
+import by.epam.jwd.dao.db_connection.ConnectionPool;
+import by.epam.jwd.dao.db_connection.ConnectionPoolException;
 
 @WebListener
 public class Listener implements ServletContextListener {
@@ -20,7 +20,7 @@ public class Listener implements ServletContextListener {
         try {
             connectionPool.initPool();
         } catch (ConnectionPoolException e) {
-           LOGGER.error("Failed while tried to initialize listener");
+           LOGGER.error("Failed to initialize listener");
         }
     }
     @Override
@@ -29,7 +29,7 @@ public class Listener implements ServletContextListener {
         try {
             connectionPool.dispose();
         } catch (ConnectionPoolException e) {
-            LOGGER.error("Failed while tried to destroy connection pool");
+            LOGGER.error("Failed to destroy connection pool");
         }
     }
 }

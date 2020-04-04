@@ -1,4 +1,4 @@
-package by.epam.jwd.dao.dbConnection;
+package by.epam.jwd.dao.db_connection;
 
 public class ConnectionPoolException extends Exception {
 	private static final long serialVersionUID = 1L;
