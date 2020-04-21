@@ -41,7 +41,7 @@
 <div class="wrapper">
 <div class="content">
     <div align="center" style="margin-top: 100px; margin-bottom: 150px">
-        <table width=800px border="1"  style="border: 5px ridge DarkBlue">
+        <table border="1"  style="border: 5px ridge DarkBlue">
             <tr>
                 <td colspan="2">
                     <div class="locale">
@@ -79,7 +79,7 @@
                     <p style="color: DarkBlue; font-weight: bold; font-size: 18px; margin: 10px">${loginMessage}</p>
                 </td>
                 <td>
-                     <form action="Controller" method="GET"  align="center">
+                     <form action="Controller" method="GET">
                           <input type="hidden" name="command" value="to_login" />
                           <button class="btn btn-success" type="submit">${logIn}</button>
                      </form>
@@ -90,7 +90,7 @@
                     <p style="color: DarkBlue; font-weight: bold; font-size: 18px; margin: 10px">${registerMessage}</p>
                 </td>
                 <td>
-                    <form action="Controller" method="GET"  align="center">
+                    <form action="Controller" method="GET">
                         <input type="hidden" name="command" value="to_register" />
                         <button class="btn btn-success" type="submit">${register}</button>
                     </form>

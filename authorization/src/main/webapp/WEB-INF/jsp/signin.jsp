@@ -24,23 +24,20 @@
 
    <body>
    <div class="wrapper">
-   <div class="content">
+   <div class="content" align="center">
         <form id="loginForm" action="Controller" method="post">
               <input type="hidden" name="command" value="sign_in" />
-              <table id="login-table">
-              <tr>
-                    <td><form:label path="login">${login}</form:label></td>
-                    <td><input type="text" name="login"  maxlength="10" placeholder="Mishka123" required="required" title="${login}"/></td>
-              </tr>
-              <tr>
-                    <td><form:label path="password">${password}</form:label></td>
-                    <td><input type="password" name="password"  maxlength="10" placeholder="Qwerty123" required="required" title="${password}"/></td>
-              </tr>
-              <tr>
-                    <td></td>
-                    <td><input type="submit" class="btn btn-success" value="${send}"/></td>
-              </tr>
-              </table>
+              <fieldset >
+ 					<legend style="color:DarkBlue; font-weight:bold">
+ 					</legend>
+				    <label for="login">${login}</label> <br>
+				    <input type="text" name="login" id="login" maxlength="15" required="required" placeholder="Johnny" title="${login}" /><br>
+				    <label for="password">${password}</label> <br>
+				    <input type="password" name="password" id="password" maxlength="15" required="required" placeholder="Qwerty123" title="${password}" /><br>
+				    <br>
+				    <input type="submit" class="btn btn-success"
+										value="${send}" />				
+    		  </fieldset>
         </form>
    </div>
    </div>

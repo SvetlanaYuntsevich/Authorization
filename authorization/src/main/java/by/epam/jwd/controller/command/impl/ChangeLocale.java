@@ -1,10 +1,11 @@
 package by.epam.jwd.controller.command.impl;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.jstl.core.Config;
 
 import by.epam.jwd.controller.PageContainer;
 import by.epam.jwd.controller.command.Command;
+import javax.servlet.jsp.jstl.core.Config;
+
 
 public class ChangeLocale implements Command {
 
